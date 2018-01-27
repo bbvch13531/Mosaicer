@@ -8,10 +8,8 @@ from flask import Flask, jsonify, request
 
 # from convert import convert_image, convert_images
 import binary_convert as bc
-import compare
 import mosaicer
 from train import train_data
-import train_gpu
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = os.path.join(os.getcwd(), 'image')
@@ -24,7 +22,7 @@ def train():
     train_dir = request.args.get('train_dir')
     train_dir = makeDir(train_dir)
 
-    if train_gpu.train(data_dir=data_dir, train_dir=train_dir):
+    if train_data.train(data_dir=data_dir, train_dir=train_dir):
         json_path = os.path.join(data_dir, 'state.json')
         json_state = {"names": []}
         filenames = os.listdir(data_dir)
